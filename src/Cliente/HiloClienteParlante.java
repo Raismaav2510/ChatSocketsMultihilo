@@ -14,6 +14,7 @@ public class HiloClienteParlante extends Thread {
     protected DataInputStream dis;
     private int id;
     public static String HOST = "localhost";
+    public static String NAME = "name";
 
     public HiloClienteParlante(int id) {
         this.id = id;
@@ -22,13 +23,15 @@ public class HiloClienteParlante extends Thread {
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingresa tu nombre: ");
+        NAME = scanner.nextLine();
         System.out.print("Ingresa la dirección IP del servidor: ");
         HOST = scanner.nextLine();
         try {
             socket = new Socket(HOST, 8080);
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
-            System.out.println("Rafael envía un saludo");
+            System.out.println(NAME + " envía un saludo");
             dos.writeUTF("hola");
             String respuesta = "";
             respuesta = dis.readUTF();
